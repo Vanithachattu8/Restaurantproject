@@ -30,12 +30,13 @@ private long id;
 private LocalDate date;
 
 @Column(name = "time")
-private LocalTime time;
+private String time;
 
 @Column(name = "number_of_guests")
 private int numberOfGuests;
 
-
+@Column(name = "table_number")
+private Integer tableNumber;
 @JsonIgnore
 @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
 private List<Transaction> transaction;
@@ -48,6 +49,10 @@ private List<Transaction> transaction;
  @JoinColumn(name = "customer_id")
  private Customer customer;
 
+//@ManyToOne
+//@JoinColumn(name = "table_id")
+//private Tables table;
+
 @JsonIgnoreProperties("booking")
 @ManyToMany
 //@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
@@ -56,4 +61,5 @@ private List<Transaction> transaction;
         inverseJoinColumns = {@JoinColumn(name = "restaurant_id", nullable = false, updatable = false)}
 )
 private List<Restaurant> restaurantTables;
+
 }

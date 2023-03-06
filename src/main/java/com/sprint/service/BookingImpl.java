@@ -30,31 +30,57 @@ public class BookingImpl implements BookingService
 	private Customer customer=new Customer();
 	
 	//allow a customer
+//	@Override
+//	public BookingDTO createBooking(long custId,BookingDTO booking)throws BookingAlreadyExistsException {
+//		Optional<Booking> existingBooking = bookingRepository.findByDateAndNumberOfGuests(booking.getDate(), booking.getNumberOfGuests());
+//		Booking book;
+//		if(existingBooking.isPresent()) {
+//			throw new BookingAlreadyExistsException("Tables is already booked for given date and party size");
+//			}
+//		else
+//		{
+//		admin.setAdminId(1);
+//		customer.setCustomerId(custId);
+//		book = new Booking();
+//		book.setId(booking.getId());
+//		book.setDate(booking.getDate());
+//		book.setTime(LocalTime.now());
+//		book.setAdmin(admin);
+//		book.setCustomer(customer);
+//		book.setNumberOfGuests(booking.getNumberOfGuests());
+//		
+//		}
+//		Booking b=bookingRepository.save(book);
+//		booking.setId(book.getId());
+//		return booking;
+//	}
 	@Override
-	public BookingDTO createBooking(long custId,BookingDTO booking)throws BookingAlreadyExistsException {
-		Optional<Booking> existingBooking = bookingRepository.findByDateAndNumberOfGuests(booking.getDate(), booking.getNumberOfGuests());
-		Booking book;
-		if(existingBooking.isPresent()) {
-			throw new BookingAlreadyExistsException("Table is already booked for given date and party size");
-			}
-		else
-		{
-		admin.setAdminId(1);
-		customer.setCustomerId(custId);
-		book = new Booking();
-		book.setId(booking.getId());
-		book.setDate(booking.getDate());
-		book.setTime(LocalTime.now());
-		book.setAdmin(admin);
-		book.setCustomer(customer);
-		book.setNumberOfGuests(booking.getNumberOfGuests());
-		
-		}
-		Booking b=bookingRepository.save(book);
-		booking.setId(book.getId());
-		return booking;
-	}
-
+	public BookingDTO bookTable(long custId,BookingDTO booking)throws BookingAlreadyExistsException{
+	      List<Booking> existingBooking = bookingRepository.findByDateTimeAndNumberOfGuestsAndTableNumber(booking.getDate(),booking.getTime(), booking.getNumberOfGuests(), booking.getTableNumber());
+	      Booking book;
+	      if (!existingBooking.isEmpty()) {
+	         throw new  BookingAlreadyExistsException("This table is already booked for the selected date and time");
+	      }
+	 else
+	  		{
+	  		admin.setAdminId(1);
+	  		customer.setCustomerId(custId);
+	  		book = new Booking();
+	  		book.setId(booking.getId());
+	  		book.setDate(booking.getDate());
+	  		book.setTime(booking.getTime());
+	  		book.setTableNumber(booking.getTableNumber());
+	  		//book.setTime(LocalTime.now());
+	  		book.setAdmin(admin);
+	  		book.setCustomer(customer);
+	  		book.setNumberOfGuests(booking.getNumberOfGuests());
+	  		
+	  		}
+	  		Booking b=bookingRepository.save(book);
+	  		booking.setId(book.getId());
+	  		return booking;
+	  	}
+	     
 	
 	public List<Booking> findBookingByDate(LocalDate date)throws TransactionRecordNotFoundException{
 		List<Booking>  existBooking = bookingRepository.findByDate(date);

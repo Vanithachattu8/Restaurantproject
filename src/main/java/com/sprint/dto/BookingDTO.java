@@ -1,6 +1,7 @@
 package com.sprint.dto;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -21,8 +22,13 @@ public class BookingDTO {
 		
 		@Column(name = "date")
 		private LocalDate date;
+		@Column(name = "time")
+		private String time;
 		
 		@Column(name = "number_of_guests")
 		private int numberOfGuests;
+		
+		@Column(name = "table_number")
+		private Integer tableNumber;
 
 }

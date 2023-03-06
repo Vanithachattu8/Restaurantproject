@@ -26,6 +26,7 @@ import com.sprint.exceptions.InvalidCredentialsException;
 import com.sprint.models.Booking;
 import com.sprint.models.Customer;
 import com.sprint.repository.CustomerRepository;
+import com.sprint.service.BookingImpl;
 import com.sprint.service.BookingService;
 import com.sprint.service.CustomerService;
 
@@ -34,6 +35,8 @@ import com.sprint.service.CustomerService;
 public class CustomerController {
 
 	private BookingService bookingService;
+	@Autowired
+	private BookingImpl bookingImpl;
 	
 	@Autowired
 	CustomerRepository customerRepository;
@@ -57,12 +60,17 @@ public class CustomerController {
 			return this.customerService.loginUser(email,password);
 			}
 	
+//		@PostMapping(value="/{custId}/book")
+//		public BookingDTO bookTable(@PathVariable long custId,@RequestBody BookingDTO booking) throws BookingAlreadyExistsException
+//		{
+//			return bookingService.createBooking(custId,booking);
+//		}
+//	  
 		@PostMapping(value="/{custId}/book")
-		public BookingDTO bookTable(@PathVariable long custId,@RequestBody BookingDTO booking) throws BookingAlreadyExistsException
-		{
-			return bookingService.createBooking(custId,booking);
-		}
-	  
+		   public BookingDTO bookTable(@PathVariable long custId,@RequestBody BookingDTO booking) throws BookingAlreadyExistsException {
+		     return bookingImpl.bookTable(custId,booking);
+		     
+		   }
 	  @PutMapping(value="/bookings/{bookingId}")
 	  public ResponseEntity<Booking> updateBooking(@PathVariable Long bookingId, @RequestBody  LocalDate newDate) throws BookingNotFoundException{
 		   Booking updatedBooking = null;

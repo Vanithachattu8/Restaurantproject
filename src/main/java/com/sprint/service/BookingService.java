@@ -13,6 +13,7 @@ import com.sprint.models.Booking;
 public interface BookingService {
 	List<Booking> findBookingByDate(LocalDate date)throws TransactionRecordNotFoundException;
 	Booking updateBooking(long bookingId,LocalDate newDate) throws BookingNotFoundException;
-	BookingDTO createBooking(long custId,BookingDTO bookingDTO) throws BookingAlreadyExistsException;
+	//BookingDTO createBooking(long custId,BookingDTO bookingDTO) throws BookingAlreadyExistsException;
 	public void cancelBooking(Long bookingId) throws BookingNotFoundException;
+	BookingDTO bookTable(long custId,BookingDTO bookingDTO) throws BookingAlreadyExistsException;
 }
